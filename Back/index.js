@@ -1,10 +1,11 @@
 import express from "express";
-import enviroment from "./config/enviroment";
-import connection from "./database/db";
+import enviroment from "./src/api/config/enviroment.js";
+import connection from "./src/api/database/db.js";
 
 import cors from "cors";
+import { PoolConnection } from "mysql2";
 
-const app = express;
+const app = express();
 const PORT = enviroment.port;
 
 //Middelwares
@@ -44,16 +45,20 @@ app.get("/", (req, res) => {
     res.send("Hola");
 });
 
-app.get("api/productos", async (req, res) => {
+app.get("/api/productos", async (req, res) => {
+    console.log("algo :: ");
     try {
-        const sql = "SELECT id, name, price, image FROM productos";
+        const sql = "SELECT id, idproducto, nombre, imagen, categoria, precio, activo FROM productos";
 
+        console.log("algo1 :: ", PoolConnection.PORT);
         const [rows] = await connection.query(sql);
+
+        console.log("algo2 :: ",rows.length);
 
         if (rows.length === 0) {
             return res.status(404).json({
                 message: "No se encontraron productos"
-            })            
+            });            
         }
 
         res.status(200).json({
@@ -66,14 +71,17 @@ app.get("api/productos", async (req, res) => {
 
         res.status(500).json({
             message: "Error interno"
-        })
+        });
     }
-})
+});
 
 app.get("/api/productos/:id", validateId, async (req,res) => {
     
     try {
-        const sql = "SELECT id, name, price, image FROM productos WHERE productos.id = ?";
+        console.log("#",req.id);
+
+
+        const sql = "SELECT id, idproducto, nombre, imagen, categoria, precio, activo  FROM productos WHERE productos.id = ?";
         const [rows] = await connection.query(sql, [req.id]);
 
         if (rows.length === 0 ) {
@@ -87,11 +95,11 @@ app.get("/api/productos/:id", validateId, async (req,res) => {
         });
         
     } catch (error) {
-        console.log("Error obtenido producots con id: ", error.message)
+        console.log("Error obtenido producots con id: ", error.message);
 
         res.status(500).json({
             error: "Error interno"
-        })
+        });
         
 
     }
@@ -102,11 +110,11 @@ app.post("/api/productos", async (req, res) => {
     try {
         console.log(req.body);
 
-        const {name, imagen,category, price} = req.body;
+        const {idproducto, nombre, imagen, categoria, precio, activo } = req.body;
 
-        const sql = "INSERT INTO productos (name, imagen, category, price) VALUES (?,?,?,?)";
+        const sql = "INSERT INTO productos (idproducto, nombre, imagen, categoria, precio, activo ) VALUES (?,?,?,?,?,?)";
 
-        await connection.query(sql, [name, imagen, category, price]);
+        await connection.query(sql, [idproducto, nombre, imagen, categoria, precio, activo ]);
 
         res.status(200).json({
             message: "Producto cargado"
@@ -121,11 +129,11 @@ app.post("/api/productos", async (req, res) => {
 //Actualizacion
 app.put("/api/productos", async (req, res) => {
     try {
-        const {id, name, image, category, price, active } = req.body;
+        const {id, idproducto, nombre, imagen, categoria, precio, activo  } = req.body;
 
-        const sql = "UPADTE productos SET name = ?, image = ?, category = ?, price = ?, active = ? WHERE id = ?";
+        const sql = "UPDATE productos SET idproducto =?, nombre=?, imagen =?, categoria=?, precio=?, activo=? WHERE id = ?";
 
-        await connection.query(sql, [name, image, category, price, active, id]);
+        await connection.query(sql, [idproducto, nombre, imagen, categoria, precio, activo , id]);
 
         return res.status(200).json({
             message: "Producto Actualizado"
@@ -139,9 +147,11 @@ app.put("/api/productos", async (req, res) => {
 
 
 //Borrado 
-app.delete("/app/productos/:id", async (req, res) => {
+app.delete("/api/productos/:id", async (req, res) => {
     try {
         const {id} = req.params;
+
+        console.log("sda", id);
         await connection.query("DELETE FROM productos WHERE id = ?", [id]);
 
         res.status(200).json({
@@ -156,5 +166,5 @@ app.delete("/app/productos/:id", async (req, res) => {
 
 //Listener
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto $[PORT]`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

@@ -3,21 +3,47 @@ import enviroment from "./src/api/config/enviroment.js";
 import connection from "./src/api/database/db.js";
 
 import cors from "cors";
-import { PoolConnection } from "mysql2";
+//import { PoolConnection } from "mysql2";
+import { loggerURL } from "./src/api/middlewares/middlewares.js";
+import { authRoutes, productRoutes, userRoutes, viewRoutes } from "./src/api/routes/index.js";
+import { join, __dirname } from "./src/api/utils/index.js";
+import session from "express-session";
 
+const { port, session_key } = environments;
 const app = express();
-const PORT = enviroment.port;
+const PORT = port;
+
+app.set("view engine", "ejs");
+app.set("views", join(__dirname, "src/views"));
+
+
+
 
 //Middelwares
 app.use(cors());
 
+app.use(loggerURL);
+
+/*
 app.use((req, res, next) =>{
     console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.url}`);
     next();
 });
+*/
 
 app.use(express.json());
 
+app.use(express.urlencoded({extended: true}));
+
+app.use(express.static(join(__dirname, "src/public")));
+
+app.use(session({
+    secret: session_key,
+    resave: false,
+    saveUninitialized: true
+}));
+
+/*
 const validateId = (req, res, next) => {
     const { id } = req.params;
 
@@ -38,13 +64,17 @@ const validateId = (req, res, next) => {
     req.id = parsedId;
 
     next();
-}
+}*/
 
+/*
 //Endpontis
 app.get("/", (req, res) => {
     res.send("Hola");
 });
+*/
 
+/*
+//Consulta
 app.get("/api/productos", async (req, res) => {
     console.log("algo :: ");
     try {
@@ -73,8 +103,10 @@ app.get("/api/productos", async (req, res) => {
             message: "Error interno"
         });
     }
-});
+});*/
 
+/*
+//Consulta xId
 app.get("/api/productos/:id", validateId, async (req,res) => {
     
     try {
@@ -103,8 +135,9 @@ app.get("/api/productos/:id", validateId, async (req,res) => {
         
 
     }
-});
+});*/
 
+/*
 //Creacion
 app.post("/api/productos", async (req, res) => {
     try {
@@ -124,8 +157,9 @@ app.post("/api/productos", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-});
+});*/
 
+/*
 //Actualizacion
 app.put("/api/productos", async (req, res) => {
     try {
@@ -143,9 +177,9 @@ app.put("/api/productos", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-});
+});*/
 
-
+/*
 //Borrado 
 app.delete("/api/productos/:id", async (req, res) => {
     try {
@@ -162,6 +196,13 @@ app.delete("/api/productos/:id", async (req, res) => {
         console.log(error);
     }
 });
+*/
+
+//
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+app.use("/dashboard", viewRoutes);
+app.use("/login", authRoutes);
 
 
 //Listener

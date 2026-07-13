@@ -1,0 +1,29 @@
+<%- include("partials/head.ejs") %>
+
+<h4 class="texto-login"><%= about %></h4>
+
+
+<form id="loginForm" class="form-alta" action="/login" method="POST">
+
+    <!-- TO DO, introducir campos REGEX para validar los datos que enviamos -->
+    <label for="emailUser">Email</label>
+    <input type="email" name="email" id="emailUser" value="johnny@melavo.com" required>
+
+    <label for="passwordUser">Password</label>
+    <input type="password" name="password" id="passwordUser" value="melavo" required>
+
+    <div>
+        <input type="submit" value="Login">
+    </div>
+    
+</form>
+
+
+<% if(typeof error !== "undefined") { %> 
+
+        <p class="mensaje mensaje-error"><%= error %></p>
+
+<% } %>
+
+
+<%- include("partials/footer.ejs") %>

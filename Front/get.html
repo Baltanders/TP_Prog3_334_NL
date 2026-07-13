@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TP - Front</title>
 
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="./js/index.js" defer></script>
+   <link rel="stylesheet" href="css/styles.css">
+   <script src="./main.js" defer></script>
 
 
 </head>
@@ -48,12 +49,24 @@
     </header>
 
     <main>
+        <section class="form_productos">
+            <h2>-Consultar productos-</h2>
+            <form id="getProducto-form">
+                <label for="idProd">Id del producto:</label>
+                <input type="number" name="idProd" id="idProd" required>
+
+                <input type="submit" value="Consultar Productos">
+
+            </form>
+
+        </section>
+
         <section class="seccionProductos">
-            <h2>-Productos-</h2>
-            <div id="contenedor-productos">
+            <div id="contenedot-productos">
 
             </div>
         </section>
+
     </main>
 
 </body>

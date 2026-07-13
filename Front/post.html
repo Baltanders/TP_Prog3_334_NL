@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TP - Front</title>
 
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="./js/index.js" defer></script>
+   <link rel="stylesheet" href="css/styles.css">
+   <script src="./main.js" defer></script>
 
 
 </head>
@@ -48,12 +49,38 @@
     </header>
 
     <main>
-        <section class="seccionProductos">
-            <h2>-Productos-</h2>
-            <div id="contenedor-productos">
+        <section class="form_productos">
+            <h2>-Crear Productos-</h2>
+            <form >
+                <label for="nombreProd">Nombre:</label>
+                <input type="text" name="nombre" id="nombreProd" required>
+
+                <label for="imagenProd">Imagen:</label>
+                <input type="text" name="imagen" id="imagenProd" required>
+
+                <label for="categoriaProd">Categoria:</label>
+                <select name="categoria" id="categoriaProd" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+
+                <label for="precioProd">Precio:</label>
+                <input type="number" name="precio" id="precioProd" required>
+
+                <div>
+                    <input type="submit" value="Envia Productos">
+                </div>
+            </form>
 
             </div>
         </section>
+
+        <section class="seccionProductos">
+            <div id="contenedot-productos">
+
+            </div>
+        </section>
+
     </main>
 
 </body>

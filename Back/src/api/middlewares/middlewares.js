@@ -1,5 +1,5 @@
 //Midelwares
-const logguerUrl = (req, res, next) => {
+const logguerURL = (req, res, next) => {
     console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.url}`);
     next();
 }
@@ -72,7 +72,7 @@ const requireLogin = (req, res, next) => {
 
 //
 export {
-    logguerUrl,
+    logguerURL,
     validateId,
     validateProduct,
     requireLogin

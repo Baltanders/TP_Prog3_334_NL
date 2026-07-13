@@ -1,4 +1,4 @@
-import productosModel from "../models/products.models.js";
+import productosModel from "../models/product.models.js";
 
 //Get 
 export const getAllProducts = async (requestAnimationFrame, res) => {
@@ -119,7 +119,7 @@ export const removeProduct = async (req, res) =>{
         await productosModel.deleteProduct(req.id);
 
         return res.status(200).json({
-            message: 'Producto id ${id} eliminado'
+            message: 'Producto id ${id} actualizado'
         });
         
     } catch (error) {

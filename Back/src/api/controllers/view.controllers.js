@@ -1,4 +1,4 @@
-import productosModel from "../models/products.models.js";
+import productosModel from "../models/product.models.js";
 
 export const indexView = async (req, res) => {
     try {

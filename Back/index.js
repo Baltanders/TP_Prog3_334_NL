@@ -4,12 +4,12 @@ import connection from "./src/api/database/db.js";
 
 import cors from "cors";
 //import { PoolConnection } from "mysql2";
-import { loggerURL } from "./src/api/middlewares/middlewares.js";
+import { logguerURL } from "./src/api/middlewares/middlewares.js";
 import { authRoutes, productRoutes, userRoutes, viewRoutes } from "./src/api/routes/index.js";
 import { join, __dirname } from "./src/api/utils/index.js";
 import session from "express-session";
 
-const { port, session_key } = environments;
+const { port, session_key } = enviroment;
 const app = express();
 const PORT = port;
 
@@ -22,7 +22,7 @@ app.set("views", join(__dirname, "src/views"));
 //Middelwares
 app.use(cors());
 
-app.use(loggerURL);
+app.use(logguerURL);
 
 /*
 app.use((req, res, next) =>{

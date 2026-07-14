@@ -1,7 +1,7 @@
 const contenedorProductos = document.getElementById("contenedor-productos");
 const getProductForm = document.getElementById("getProduct-form");
 const contenedorForm = document.getElementById("contenedor-form");
-const urlBase = "http://localhost:3000/api/products";
+const urlBase = "http://localhost:3001/api/products";
 
 getProductForm.addEventListener("submit", async event => {
     event.preventDefault(); 
@@ -49,8 +49,8 @@ function renderizarProducto(producto) {
     let htmlProducto = `
     <ul>
         <li class="lista-producto">
-            <img src="${producto.image}" alt="${producto.name}">
-            <p>Id: ${producto.id} / Nombre: ${producto.name} / <strong>Precio: $${producto.price}</strong></p>
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <p>Id: ${producto.id} / Nombre: ${producto.nombre} / <strong>Precio: $${producto.precio}</strong></p>
             <input type="button" id="updateProduct-button" value="Actualizar Producto">
         </li>
     </ul>
@@ -81,10 +81,10 @@ function formularioPutProducto(event, producto) {
             <input type="hidden" id="idProd" name="id" value="${producto.id}">
 
             <label for="nameProd">Nombre</label>
-            <input type="text" name="name" id="nameProd" value="${producto.name}" required>
+            <input type="text" name="name" id="nameProd" value="${producto.nombre}" required>
 
             <label for="imageProd">Imagen</label>
-            <input type="text" name="image" id="imageProd" value="${producto.image}" required>
+            <input type="text" name="image" id="imageProd" value="${producto.imagen}" required>
 
             <label for="categoryProd">Categoria</label>
             <select name="category" id="categoryProd" required>
@@ -93,7 +93,7 @@ function formularioPutProducto(event, producto) {
             </select>
 
             <label for="priceProd">Precio</label>
-            <input type="number" name="price" id="priceProd" value="${producto.price}" required>
+            <input type="number" name="price" id="priceProd" value="${producto.precio}" required>
 
             <label for="activeProd">Activo</label>
             <select name="active" id="activeProd" required>
@@ -112,23 +112,23 @@ function formularioPutProducto(event, producto) {
     const updateProductForm = document.getElementById("updateProduct-form");
 
     updateProductForm.addEventListener("submit", event => {
-        actualizarProducto(event); /
+        actualizarProducto(event); 
     });
 }
 
 async function actualizarProducto(event) {
-
+/*
     const confirmacion = confirm("Querés actualizar este producto?");
     
     if(!confirmacion) {
         alert("Actualización cancelada");
         return;
-    }
+    }*/
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
     console.table(data);
-
+    console.log("PUT_:", data);
 
     if (!data.name || !data.image || !data.price) {
         alert("Todos los campos son obligatorios");
@@ -162,4 +162,4 @@ async function actualizarProducto(event) {
         mostrarError(error.message);
     }
     
-
+}

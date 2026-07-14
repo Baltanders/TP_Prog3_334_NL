@@ -15,9 +15,9 @@ export const createUserAdmin = async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(passwordUser, saltRounds);
 
-        const sql = "INSERT into users (name, email, password) values (?, ?, ?)";
+        const sql = "INSERT INTO usuarios (nombre, email, password, es_admin) values (?, ?, ?, ?)";
 
-        const [rows] = await connection.query(sql, [nameUser, emailUser, hashedPassword]);
+        const [rows] = await connection_db.query(sql, [nameUser, emailUser, hashedPassword, 1]);
 
         res.status(201).json({
             message: "Usuario creado"

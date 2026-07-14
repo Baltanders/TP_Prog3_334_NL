@@ -32,7 +32,7 @@ export const getProductById = async (req, res) => {
     try {
         const [rows] = await productosModel.selectProductById(req.id);
 
-        if (rows-length === 0) {
+        if (rows.length === 0) {
             return res.status(404).json({
                 message: `No se encontro el producto id ${req.id}`
             });
@@ -56,16 +56,17 @@ export const getProductById = async (req, res) => {
 //Post
 export const createProduct = async (req, res) => {
     try {
-        const {nombre, imagen, categoria, precio} = req.body;
+        const {name, image, category, price} = req.body;
 
-        if (!nombre || !imagen || !categoria || !precio) {
+
+        if (!name || !image || !category || !price) {
             return res.status(400).json({
-                message: "Datos invalidos"
+                message: "Datos invalidos1"
             });
         }
 
-        const cleanName = nombre.trim();
-        const [rows] = await productosModel.insertProduct(cleanName, imagen, categoria, precio);
+        const cleanName = name.trim();
+        const [rows] = await productosModel.insertProduct(cleanName, image, category, price);
 
         res.status(201).json({
             message: `Producto creado id: ${rows.insertId}`,
@@ -85,6 +86,7 @@ export const createProduct = async (req, res) => {
 export const modifyProduct = async (req, res) =>{
     try {
         const {id, nombre, imagen, categoria, precio, activo} = req.body;
+        console.log("en la mod",nombre,imagen,categoria,precio);
 
         if (!nombre || !imagen || !categoria || !precio) {
             return res.status(400).json({

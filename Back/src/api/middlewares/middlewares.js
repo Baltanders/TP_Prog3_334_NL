@@ -63,6 +63,7 @@ const categoriasValidas = ["comida", "tragos"];
 const validateProduct = (req, res, next) => {
     const { name, price, category } = req.body;
     const errores = [];
+console.log("asd:", req.body);
 
     if (typeof name !== "string" || name.trim().length < 2) {
         errores.push("El nombre debe tener al menos 2 caracteres");
@@ -80,7 +81,7 @@ const validateProduct = (req, res, next) => {
 
     if (errores.length > 0) {
         return res.status(400).json({
-            message: "Datos invalidos", errores
+            message: "Datos invalidos2", errores
         })
     }
 

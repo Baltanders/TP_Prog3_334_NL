@@ -7,7 +7,6 @@ const { database } = enviroment;
 const connection = mysql2.createPool({
     host: database.host,
     database: database.name,
-    //name: database.name,
     user: database.user,
     password: database.password
 

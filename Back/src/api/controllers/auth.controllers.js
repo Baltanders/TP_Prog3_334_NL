@@ -23,7 +23,7 @@ export const getUserAdmin = async (req, res) =>{
             
         }
 
-        const sql = "SELECT * FROM usuarios WHERE eamil=?";
+        const sql = "SELECT * FROM usuarios WHERE email=?";
         const [rows] = await coneccion_db.query(sql, [email]);
 
         if (rows.length === 0) {
